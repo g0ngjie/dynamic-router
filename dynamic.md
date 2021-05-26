@@ -4,15 +4,13 @@
 >
 > 由于公司业务需要，在权限验证与安全方面，要求是菜单根据权限动态控制。
 >
-> 在现有的项目当中，通过基于  **vue-element-admin** 项目提供的菜单权限控制，无法满足公司的具体业务需要。
+> 在现有的项目当中，通过基于 **vue-element-admin** 项目提供的菜单权限控制，无法满足公司的具体业务需要。
 >
 > 实际上主要的目的是通过后端控制菜单权限。
 >
 > 因此也迭代出了两个版本，**版本二**也只是提供一个设计思路，具体复杂实现基于此套是是可以满足的。这里只做简单的阐述，具体实现可以结合源码。
 
-
-
-* 版本一
+- 版本一
 
   在公司项目**【用户中心】**中，我采用的是通过后端菜单列表以及权限标识，做深度递归和匹配。这么写一部分原因是因为是在现有的接口文档基础之上做 **魔改**，第二点也是因为代码耦合度比较高，重构的话周期长（前后端都需要改，前端工作量会很大）。
 
@@ -84,10 +82,10 @@
   ```javascript
   import { MenuType, MenuStatus } from "@/utils/Enum/Menu";
   import _ from "lodash";
-  
+
   /* 白名单 */
   const whiteList = ["404"];
-  
+
   /**
    * 根据权限 加载菜单
    * @param {Array} assessedMenus 权限菜单
@@ -96,7 +94,7 @@
   export function LoadMenus(assessedMenus, asyncRoutes) {
     const { CATALOG } = MenuType;
     const { ENABLE } = MenuStatus;
-  
+
     /** 先预加载 需要添加的菜单 */
     let menuCache = {},
       childCache = {};
@@ -107,16 +105,20 @@
       /* 菜单 */
       if (children) childsForMap(childCache, children, meta.title);
     });
-  
+
     /* 需要加载的目录 */
     let resultArray = [];
-  
+
     assessedMenus
       .sort((a, b) => a.orderNo - b.orderNo)
       .forEach((item) => {
         const { menuType, menuPerms, menuIcon, subMenus, status } = item;
         /* 目录 */
-        if (+menuType === CATALOG && +status === ENABLE && menuCache[menuPerms]) {
+        if (
+          +menuType === CATALOG &&
+          +status === ENABLE &&
+          menuCache[menuPerms]
+        ) {
           menuCache[menuPerms].children = [];
           menuCache[menuPerms].children = getChildMenus(
             subMenus,
@@ -128,15 +130,15 @@
           resultArray.push(menuCache[menuPerms]);
         }
       });
-  
+
     /* 添加白名单 */
     whiteList.forEach((white) => {
       if (menuCache[white]) resultArray.push(menuCache[white]);
     });
-  
+
     return resultArray;
   }
-  
+
   /**
    * 获取子菜单列表
    * @param {Array} subMenus 权限子菜单
@@ -146,7 +148,7 @@
   function getChildMenus(subMenus, childCache, pCode) {
     const { MENU } = MenuType;
     const { ENABLE } = MenuStatus;
-  
+
     /* 子菜单集合 */
     let arr = [];
     subMenus
@@ -165,7 +167,7 @@
       arr.push(...childCache[pCode]);
     return arr;
   }
-  
+
   /**
    * 子集菜单 做Map
    * @param {Object} cache 子集菜单hMap
@@ -182,9 +184,9 @@
       } else cache[meta.title] = item;
     });
   }
-  
+
   /* >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> */
-  
+
   /**
    * 为解决菜单渲染时，替换权限菜单有效信息：menuIcon
    * @param {Array} assessedMenus 权限菜单
@@ -193,7 +195,7 @@
   export function matchMenuResource(assessedMenus, asyncRoutes) {
     /** 资源菜单 to Map */
     let menuCache = {};
-  
+
     const { ENABLE } = MenuStatus;
     assessedMenus.forEach(({ menuPerms, menuIcon, subMenus, status }) => {
       /* 启用状态 */
@@ -204,7 +206,7 @@
         if (_.isArray(subMenus)) cacheSubMenus(subMenus, menuCache);
       }
     });
-  
+
     /** Router菜单 */
     asyncRoutes.forEach((item) => {
       const { meta, children } = item;
@@ -216,7 +218,7 @@
     });
     return asyncRoutes;
   }
-  
+
   /**
    * 缓存菜单
    * @param {Array} subMenus 菜单列表
@@ -230,7 +232,7 @@
       }
     });
   }
-  
+
   /**
    * 匹配菜单
    * @param {Array} children 菜单列表
@@ -245,15 +247,13 @@
   }
   ```
 
-  
-
-* 版本二
+- 版本二
 
   网上的博客分享的第二种解决方案
 
   附上链接 [https://segmentfault.com/a/1190000021900731](https://segmentfault.com/a/1190000021900731)
 
-  链接2 [https://www.jianshu.com/p/ceef589de5e9](https://www.jianshu.com/p/ceef589de5e9)
+  链接 2 [https://www.jianshu.com/p/ceef589de5e9](https://www.jianshu.com/p/ceef589de5e9)
 
   这两篇博客的文档大致看了一下，思路是一样的，原理实际上就是把 **Vue-Router** 里面的配置文件全部放到后端做 **Json** 存储。特殊字段如：**components**，在取出的同时动态 **require**。
 
@@ -261,19 +261,16 @@
 
   ![](static/menu1.png)
 
-  版本二我设计的思路是动静分离，Router文件的固定格式不变，具体的名称、路径做拆分，分别存到前端和后端。具体实现方式如下文。
-
-
+  版本二我设计的思路是动静分离，Router 文件的固定格式不变，具体的名称、路径做拆分，分别存到前端和后端。具体实现方式如下文。
 
 #### 项目地址
 
-[gitee](https://gitee.com/gjwork/dynamic-router)
+[Gitee](https://gitee.com/g0ngjie/dynamic-router)
+[Github](https://github.com/g0ngjie/dynamic-router)
 
 > **前端：** 基于 vue-element-admin 延用公司 【用户中心】那一套自己魔改的版本，在此基础之上重构。
 >
 > **后端：** **Go**的语法简洁，开发速度快，所以后端使用了**Go**结合**Gin**框架，做了一个简单的**CURD**服务。（主要是因为没人手协助，也只好自己写一个了。）这里不过多介绍后端。
-
-
 
 #### 动态路由
 
@@ -289,8 +286,6 @@
      "/system/manage": () => import("@/views/system/index"),
    };
    ```
-
-   
 
 2. **RouterJson** 做工厂函数
 
@@ -320,30 +315,33 @@
        ],
      };
    }
-   
+
    /**
     * 404页面
     */
    function notFound() {
-     return { path: "*", redirect: "/404", meta: { title: "404" }, hidden: true };
+     return {
+       path: "*",
+       redirect: "/404",
+       meta: { title: "404" },
+       hidden: true,
+     };
    }
    ```
-
-   
 
 3. 动静分离
 
    > 通过 **Interceptor** 调用后端接口获取 `path、name、icon等`权限菜单列表
    >
-   > 结合 Vuex下 **generateRoutes** 函数组装路由。
+   > 结合 Vuex 下 **generateRoutes** 函数组装路由。
 
    ```javascript
    import Layout from "@/layout/index.vue";
    import menuData from "@/router/menu";
-   
+
    ...
    ...
-   
+
    /**
     * 拆分path
     * @param {string} path
@@ -359,7 +357,7 @@
      });
      return { headPath, childPath: childPath.substr(1, childPath.length - 1) };
    }
-   
+
    /**
     * 根据权限 加载菜单
     * @param {Array} assessedMenus 权限菜单
@@ -382,13 +380,11 @@
          );
        }
      });
-   
+
      resultArray.push(notFound());
      return resultArray;
    }
    ```
-
-   
 
 #### 效果展示
 
