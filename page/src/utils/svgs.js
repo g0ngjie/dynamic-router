@@ -23,6 +23,6 @@ const Svgs = [
  */
 export function randomAcquisition() {
   const len = Svgs.length;
-  const index = randomInt(len);
+  const index = randomInt(len - 1);
   return Svgs[index];
 }
