@@ -1,7 +1,7 @@
 #!/bin/sh
 
 echo '-- 清理docker镜像&容器'
-docker stop mysql57 && docker rm mysql57
+docker stop dynamic_router_mysql && docker rm dynamic_router_mysql
 docker stop dynamic_router_view && docker rm dynamic_router_view
 docker stop dynamic_router && docker rm dynamic_router
 docker rmi dynamic_router_image
