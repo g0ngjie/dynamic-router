@@ -1,0 +1,17 @@
+
+pipeline {
+  agent any
+  stages {
+    stage('Deploy') {
+      steps {
+        sh 'chown jenkins:jenkins ./*'
+        sh 'yarn install'
+        sh 'chown -R jenkins:jenkins ./dist'
+        sh 'rm -rf ./dist'
+        sh 'yarn run build'
+        sh 'chmod 777 ./dist'
+        sh 'docker-compose restart nginxserver'
+      }
+    }
+  }
+}

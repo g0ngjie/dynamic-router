@@ -1,0 +1,28 @@
+version: "3.5"
+services:
+  router_page:
+    container_name: router_page
+    image: dynamic_router_page
+    restart: always
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    ports:
+      - 12333:80
+    external_links:
+      - router_service:router_service
+    networks:
+      - app-network
+
+  router_service:
+    container_name: router_service
+    image: dynamic_router_service
+    build:
+      context: ./
+      dockerfile: Dockerfile-service
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge

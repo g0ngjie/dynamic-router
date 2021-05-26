@@ -1,0 +1,10 @@
+FROM ubuntu:16.04
+
+WORKDIR /app
+
+COPY app /app
+
+RUN mkdir /app/conf
+COPY conf /app/conf
+
+CMD ["/app/app"]
