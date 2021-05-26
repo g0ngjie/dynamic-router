@@ -1,12 +1,9 @@
 #!/bin/sh
 
 echo '-- 清理docker镜像&容器'
-docker stop dynamic_router_mysql && docker rm dynamic_router_mysql
-docker stop dynamic_router_view && docker rm dynamic_router_view
-docker stop dynamic_router && docker rm dynamic_router
-docker rmi dynamic_router_image
-docker rmi dynamic_router_view_image
-docker rmi mysql57_image
+docker stop dynamic_router_view dynamic_router dynamic_router_mysql
+docker rm dynamic_router_view dynamic_router dynamic_router_mysql
+docker rmi dynamic_router_view_image dynamic_router_image mysql57_image
 
 echo '-- 进入page'
 cd page
