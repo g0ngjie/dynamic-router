@@ -11,7 +11,7 @@ docker rmi mysql57_image
 echo '-- 进入page'
 cd page
 
-echo '-- npm install'
+echo '-- npm install --registry=https://registry.npm.taobao.org'
 npm install --registry=https://registry.npm.taobao.org
 
 echo '-- 编译page'
@@ -22,7 +22,7 @@ echo '-- 部署mysql'
 docker build -t mysql57_image -f Dockerfile_mysql .
 
 echo '-- 启动mysql'
-docker run --name mysql57 -p 3306:3306 -d --restart=always mysql57_image
+docker run --name dynamic_router_mysql -d --restart=always mysql57_image
 
 echo '-- 部署nginx服务'
 docker build -t dynamic_router_view_image -f Dockerfile_nginx .
@@ -45,7 +45,7 @@ docker build -t dynamic_router_image .
 # sleep 10
 
 echo '-- 启动go服务'
-docker run --name dynamic_router --link=mysql57:mysql -p 8082:8082 -d --restart=always dynamic_router_image
+docker run --name dynamic_router --link=dynamic_router_mysql:mysql -d --restart=always dynamic_router_image
 
 echo '-- 启动nginx服务'
-docker run --name dynamic_router_view --link=dynamic_router:router_service -p 8080:80 -d dynamic_router_view_image
+docker run --name dynamic_router_view --link=dynamic_router:router_service -p 9000:80 -d --restart=always dynamic_router_view_image
