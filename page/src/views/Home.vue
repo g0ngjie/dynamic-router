@@ -69,7 +69,7 @@
           <el-input
             v-model="form.path"
             @keyup.enter.native="validate"
-            placeholder="示例: /path"
+            placeholder="示例: /user"
             style="width: 80%;"
           ></el-input>
         </el-form-item>
@@ -124,6 +124,7 @@ export default {
       this.isEdit = JSON.stringify(row) !== "{}";
       this.form = row;
       this.isShow = true;
+      this.$refs.form.resetFields();
     },
     validate() {
       this.$refs.form.validate((valid) => {
