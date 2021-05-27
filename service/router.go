@@ -1,4 +1,4 @@
-package router
+package main
 
 import (
 	"dynamic-router/service/api"
@@ -7,8 +7,8 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-// InitRouter
-func InitRouter() *gin.Engine {
+// initRouter
+func initRouter() *gin.Engine {
 	router := gin.Default()
 	router.GET("/", api.IndexRouter)
 

@@ -7,7 +7,6 @@ import (
 	"net/http"
 
 	mysql "dynamic-router/service/db"
-	router "dynamic-router/service/router"
 	setting "dynamic-router/service/utils"
 
 	"github.com/gin-gonic/gin"
@@ -23,7 +22,7 @@ func main() {
 
 	gin.SetMode(setting.ServerSetting.RunMode)
 
-	routersInit := router.InitRouter()
+	routersInit := initRouter()
 	readTimeout := setting.ServerSetting.ReadTimeout
 	writeTimeout := setting.ServerSetting.WriteTimeout
 	endPoint := fmt.Sprintf(":%d", setting.ServerSetting.Port)
