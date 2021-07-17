@@ -33,8 +33,8 @@ func AddRouter(c *gin.Context) {
 	// now := time.Now().UTC()
 
 	// 此方式 window下可能会有问题
-	var cstSh, _ = time.LoadLocation("Asia/Shanghai") //上海
-	now := time.Now().In(cstSh)
+	loc, _ := time.LoadLocation("Asia/Shanghai")
+	now := time.Now().In(loc)
 
 	_createDate := now.Format("2006-01-02 15:04:05")
 
