@@ -11,4 +11,7 @@ FROM alpine:latest
 WORKDIR /app
 COPY --from=builder app .
 
+ENV TZ=Asia/Shanghai
+RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
+
 ENTRYPOINT ["./app"]
