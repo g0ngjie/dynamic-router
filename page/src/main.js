@@ -14,6 +14,8 @@ import store from "./store";
 
 import "@/utils/Interceptor"; //拦截器
 
+import "@/utils/logger"; // 埋点
+
 Vue.use(Element);
 
 Vue.config.productionTip = false;

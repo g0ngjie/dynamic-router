@@ -2,6 +2,11 @@
 # yarn lockfile v1
 
 
+"@alrale/common-lib@^1.0.52":
+  version "1.0.57"
+  resolved "https://registry.yarnpkg.com/@alrale/common-lib/-/common-lib-1.0.57.tgz#62424bafe08218d510d175cde0f29aa65692d800"
+  integrity sha512-iAwINTfZliIX07SsJ7SK5qxoryo2rFUxFviC7BYr1QpywnQSDpHIIH53kIcCIZ1bAUGBG8SRwcNktYe+aBChbg==
+
 "@babel/code-frame@^7.0.0", "@babel/code-frame@^7.8.3":
   version "7.8.3"
   resolved "https://registry.npm.taobao.org/@babel/code-frame/download/@babel/code-frame-7.8.3.tgz?cache=0&sync_timestamp=1578980708872&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2F%40babel%2Fcode-frame%2Fdownload%2F%40babel%2Fcode-frame-7.8.3.tgz#33e25903d7481181534e12ec0a25f16b6fcf419e"
@@ -795,6 +800,11 @@
     "@babel/helper-validator-identifier" "^7.9.5"
     lodash "^4.17.13"
     to-fast-properties "^2.0.0"
+
+"@beeweb/logger@^1.0.12":
+  version "1.0.12"
+  resolved "https://registry.yarnpkg.com/@beeweb/logger/-/logger-1.0.12.tgz#441efc5ca78378da34cbec9b62d53f9abec34a9a"
+  integrity sha512-MIMc2YIO+rCWwPFTRxRXlykcQXE+dlAUmKk2okgNGB/gllI78+q41bMIJPW3SgTHyREF3wVHirq7SFvo+vM9hQ==
 
 "@hapi/address@2.x.x":
   version "2.1.4"

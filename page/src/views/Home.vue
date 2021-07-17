@@ -64,7 +64,10 @@
         <el-form-item
           label="Path"
           prop="path"
-          :rules="[{ required: true, message: '不能为空' }]"
+          :rules="[
+            { required: true, message: '不能为空' },
+            { validator: validPath },
+          ]"
         >
           <el-input
             v-model="form.path"
@@ -87,6 +90,8 @@
 <script>
 import { getMenusList, addMenu, delMenu, updateMenu } from "@/api/index";
 import moment from "moment";
+import { handleClick } from "@beeweb/logger";
+
 export default {
   data() {
     return {
@@ -95,6 +100,13 @@ export default {
       form: {},
       loading: false,
       isEdit: false,
+      validPath: (_, value, callback) => {
+        if (!value.startsWith("/")) {
+          callback(new Error("请以 / 为前缀，规范设置请求路径"));
+        } else {
+          return callback();
+        }
+      },
     };
   },
   methods: {
@@ -115,6 +127,7 @@ export default {
           const { code } = await delMenu({ id });
           if (code === 100) {
             this.$message.success("删除成功");
+            handleClick({ event: "删除", id });
             this.reload();
           }
         })
@@ -124,7 +137,7 @@ export default {
       this.isEdit = JSON.stringify(row) !== "{}";
       this.form = row;
       this.isShow = true;
-      this.$refs.form.resetFields();
+      this.$nextTick(() => this.$refs.form.clearValidate());
     },
     validate() {
       this.$refs.form.validate((valid) => {
@@ -138,6 +151,7 @@ export default {
       const { code } = await updateMenu(this.form);
       if (code === 100) {
         this.$message.success("修改成功");
+        handleClick({ event: "修改", data: this.form });
         this.isShow = false;
         this.reload();
       }
@@ -147,6 +161,7 @@ export default {
       this.isShow = false;
       if (code === 100) {
         this.$message.success("添加成功");
+        handleClick({ event: "添加", data: this.form });
         this.reload();
       } else this.$message.error(msg || "发生了一些不可预估的事情");
     },
