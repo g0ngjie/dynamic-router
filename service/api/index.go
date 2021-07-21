@@ -29,8 +29,7 @@ func AddRouter(c *gin.Context) {
 	name := c.Request.FormValue("name")
 	// pid := c.Request.FormValue("pid")
 	// _pid, _ := strconv.Atoi(pid)
-	now := time.Now()
-	fmt.Print(now)
+	now := time.Now().Local()
 	_createDate := now.Format("2006-01-02 15:04:05")
 
 	router := Router{
