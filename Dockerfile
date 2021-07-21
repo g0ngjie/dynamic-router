@@ -9,16 +9,11 @@ RUN go build -o app .
 FROM alpine:latest
 
 # 安装时区数据包
-# RUN apk add tzdata
+# 此处安装访问外网会有失败概率
+RUN apk add tzdata
 
 # 映射时区文件
-# RUN cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
-
-RUN apk --update add tzdata && \
-cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime && \
-echo "Asia/Shanghai" >/etc/timezone && \
-apk del tzdata && \
-rm -rf /var/cache/apk/*
+RUN cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
 
 WORKDIR /app
 COPY --from=builder app .
