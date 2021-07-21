@@ -7,6 +7,8 @@ RUN go env -w GOPROXY=https://goproxy.cn
 RUN go build -o app .
 
 FROM alpine:latest
+# 添加源
+RUN set -eux && sed -i 's/dl-cdn.alpinelinux.org/mirrors.ustc.edu.cn/g' /etc/apk/repositories
 
 # 安装时区数据包
 RUN apk update && apk add tzdata
