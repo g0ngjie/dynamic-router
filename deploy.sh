@@ -16,13 +16,13 @@ npm run build
 cd ..
 
 echo '-- 部署mysql'
-docker build -t mysql57_image -f Dockerfile_mysql .
+docker build -t mysql57_image -f Dockerfile.mysql .
 
 echo '-- 启动mysql'
 docker run --name dynamic_router_mysql -d --restart=always mysql57_image
 
 echo '-- 部署nginx服务'
-docker build -t dynamic_router_view_image -f Dockerfile_nginx .
+docker build -t dynamic_router_view_image -f Dockerfile.nginx .
 
 echo '-- 生成go服务配置文件'
 export ROUTER_MODE=release
