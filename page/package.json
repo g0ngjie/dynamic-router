@@ -11,7 +11,7 @@
   },
   "dependencies": {
     "@alrale/common-lib": "^1.0.52",
-    "@beeweb/logger": "^1.0.12",
+    "@beeweb/logger": "^1.0.15",
     "axios": "0.19.2",
     "babel-polyfill": "6.26.0",
     "core-js": "3.6.4",

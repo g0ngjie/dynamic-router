@@ -66,7 +66,7 @@
           prop="path"
           :rules="[
             { required: true, message: '不能为空' },
-            { validator: validPath },
+            { validator: validPath, trigger: 'blur' },
           ]"
         >
           <el-input
@@ -101,11 +101,12 @@ export default {
       loading: false,
       isEdit: false,
       validPath: (_, value, callback) => {
-        if (!value.startsWith("/")) {
-          callback(new Error("请以 / 为前缀，规范设置请求路径"));
-        } else {
-          return callback();
+        if (value.trim() === "/") {
+          return callback(new Error("根路径已经存在，请换其他的路径来试"));
+        } else if (!value.startsWith("/")) {
+          return callback(new Error("请以 / 为前缀，规范设置请求路径"));
         }
+        return callback();
       },
     };
   },
