@@ -5,15 +5,15 @@ docker stop dynamic_router_view dynamic_router dynamic_router_mysql
 docker rm dynamic_router_view dynamic_router dynamic_router_mysql
 docker rmi dynamic_router_view_image dynamic_router_image mysql57_image
 
-# echo '-- 进入page'
-# cd page
+echo '-- 进入page'
+cd page
 
-# echo '-- npm install --registry=https://registry.npm.taobao.org'
-# npm install --registry=https://registry.npm.taobao.org
+echo '-- npm install --registry=https://registry.npm.taobao.org'
+npm install --registry=https://registry.npm.taobao.org
 
-# echo '-- 编译page'
-# npm run build
-# cd ..
+echo '-- 编译page'
+npm run build
+cd ..
 
 echo '-- 部署mysql'
 docker build -t mysql57_image -f Dockerfile.mysql .
