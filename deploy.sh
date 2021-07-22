@@ -19,7 +19,7 @@ echo '-- 部署mysql'
 docker build -t mysql57_image -f Dockerfile.mysql .
 
 echo '-- 启动mysql'
-docker run --name dynamic_router_mysql -d --restart=always mysql57_image
+docker run --name dynamic_router_mysql -p 3366:3306 -d --restart=always mysql57_image
 
 echo '-- 部署nginx服务'
 docker build -t dynamic_router_view_image -f Dockerfile.nginx .
@@ -42,7 +42,7 @@ docker build -t dynamic_router_image .
 # sleep 10
 
 echo '-- 启动go服务'
-docker run --name dynamic_router -p 3366:3306 --link=dynamic_router_mysql:mysql -d --restart=always dynamic_router_image
+docker run --name dynamic_router --link=dynamic_router_mysql:mysql -d --restart=always dynamic_router_image
 
 echo '-- 启动nginx服务'
 docker run --name dynamic_router_view --link=dynamic_router:router_service -p 9000:80 -d --restart=always dynamic_router_view_image
