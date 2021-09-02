@@ -801,10 +801,10 @@
     lodash "^4.17.13"
     to-fast-properties "^2.0.0"
 
-"@beeweb/logger@^1.0.12":
-  version "1.0.12"
-  resolved "https://registry.yarnpkg.com/@beeweb/logger/-/logger-1.0.12.tgz#441efc5ca78378da34cbec9b62d53f9abec34a9a"
-  integrity sha512-MIMc2YIO+rCWwPFTRxRXlykcQXE+dlAUmKk2okgNGB/gllI78+q41bMIJPW3SgTHyREF3wVHirq7SFvo+vM9hQ==
+"@beeweb/logger@^1.0.18":
+  version "1.0.18"
+  resolved "https://registry.yarnpkg.com/@beeweb/logger/-/logger-1.0.18.tgz#31073331b35cb95c8ed9361c42d2ab2feaf11c51"
+  integrity sha512-z11wR2YcW+JjLHCqkV6r4cKO4yPP4iV5Bx3su5deuEnOgpSIFnQJodgHp1uVngZkO7nqJbstQX6rXd1edt191Q==
 
 "@hapi/address@2.x.x":
   version "2.1.4"
